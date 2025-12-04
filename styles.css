@@ -38,6 +38,32 @@ body {
     z-index: 1;
 }
 
+/* Top bar for time & gifts left */
+.top-bar {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.82);
+    color: #fff;
+    padding: 4px 18px;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    white-space: nowrap;
+    max-width: 95%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.top-bar + #snow-container {
+    /* đẩy snow container xuống chút để không đè lên top-bar */
+    padding-top: 32px;
+}
+
 /* Banner Image - Optimized for Mobile */
 .banner-image {
     width: 100%;
@@ -67,6 +93,62 @@ body {
     /* Animation - clarify effect (fade in + blur to clear) */
     animation: clarify 2s ease-in-out forwards;
     animation-delay: 0.5s;
+}
+
+/* Full-screen overlay when sold out */
+.banner-overlay--full {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    opacity: 1;
+    filter: none;
+    animation: none;
+    z-index: 9999;
+}
+
+/* Ẩn background khi hết quà, vẫn giữ hiệu ứng tuyết */
+body.sold-out .banner-image {
+    display: none;
+}
+
+/* Loading state when checking gifts */
+body.loading-gifts::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9000;
+}
+
+body.loading-gifts::after {
+    content: 'Đang kiểm tra quà...';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 1.1rem;
+    font-family: 'DFVN Modak', system-ui, sans-serif;
+    text-align: center;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    z-index: 9100;
+}
+
+/* Khi loading thì ẩn banner, top-bar và tuyết rơi (chỉ hiện overlay loading) */
+body.loading-gifts .banner-wrapper,
+body.loading-gifts .top-bar,
+body.loading-gifts #snow-container {
+    display: none;
 }
 
 /* Clarify animation - from blur to clear */
